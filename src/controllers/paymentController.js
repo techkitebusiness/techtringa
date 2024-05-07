@@ -89,8 +89,11 @@ const addManualUPIPaymentRequest = async (req, res) => {
                 timeStamp: timeNow,
             })
         }
-        utrstatus= await rechargeTable.getRecordByUtr(utr)
-        if (utrstatus) {
+        console.log("ajay")
+        const utrstatus= await rechargeTable.getRecordByUtr(utr)
+        console.log("ajay2",utrstatus)
+        if (utrstatus.length !== 0) {
+            console.log("ajay3",utrstatus)
             return res.status(400).json({
                 message: `Your UTR alredy in use`,
                 status: false,
@@ -665,6 +668,7 @@ const rechargeTable = {
     getRecordByUtr: async (utr) => {
         try {
             const [recharge] = await connection.query('SELECT * FROM recharge WHERE utr = ?', [utr]);
+            console.log(recharge)
             return recharge || null; // Return null if recharge is falsy (e.g., empty array)
         } catch (error) {
             // Handle error, such as logging or throwing
