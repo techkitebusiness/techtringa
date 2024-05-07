@@ -89,6 +89,14 @@ const addManualUPIPaymentRequest = async (req, res) => {
                 timeStamp: timeNow,
             })
         }
+        utrstatus= await rechargeTable.getRecordByUtr(utr)
+        if (utrstatus) {
+            return res.status(400).json({
+                message: `Your UTR alredy in use`,
+                status: false,
+                timeStamp: timeNow,
+            })
+        }
 
         const user = await getUserDataByAuthToken(auth)
 
@@ -654,6 +662,17 @@ const rechargeTable = {
             time: item.time,
         }))
     },
+    getRecordByUtr: async (utr) => {
+        try {
+            const [recharge] = await connection.query('SELECT * FROM recharge WHERE utr = ?', [utr]);
+            return recharge || null; // Return null if recharge is falsy (e.g., empty array)
+        } catch (error) {
+            // Handle error, such as logging or throwing
+            console.error("Error in getRecordByUtr:", error);
+            throw error; // Rethrow the error to be handled by the caller
+        }
+    },
+    
     getRechargeByOrderId: async ({ orderId }) => {
         const [recharge] = await connection.query('SELECT * FROM recharge WHERE id_order = ?', [orderId]);
 
