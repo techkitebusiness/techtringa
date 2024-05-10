@@ -89,11 +89,11 @@ const addManualUPIPaymentRequest = async (req, res) => {
                 timeStamp: timeNow,
             })
         }
-        console.log("ajay")
+        // console.log("ajay")
         const utrstatus= await rechargeTable.getRecordByUtr(utr)
-        console.log("ajay2",utrstatus)
+        // console.log("ajay2",utrstatus)
         if (utrstatus.length !== 0) {
-            console.log("ajay3",utrstatus)
+            // console.log("ajay3",utrstatus)
             return res.status(400).json({
                 message: `Your UTR alredy in use`,
                 status: false,

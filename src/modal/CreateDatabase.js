@@ -93,7 +93,7 @@ const bank_recharge = async(req, res) => {
 CreateWingo();
 Create5D();
 CreateK3();
-Level();
-Admin();
-users();
-bank_recharge();
+// Level();
+// Admin();
+// users();
+// bank_recharge();
